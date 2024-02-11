@@ -29,3 +29,34 @@ paths:
           description: successful
         "401":
           description: unauthorized
+  /api/v1/auth/sign_out:
+    delete:
+      tags:
+        - Authentication
+      summary: Signs out a user
+      description: Use this endpoint to sign out a user. Before it please sign in User with post request. Use its uid, client and access-token and try to sign out
+      operationId: signOutUser
+      parameters:
+        - name: uid
+          in: header
+          required: true
+          schema:
+            type: string
+            example: test@test.com
+        - name: client
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 6xXSSR5Rh1inF305K-V_kg
+        - name: access-token
+          in: header
+          required: true
+          schema:
+            type: string
+            example: pFppqIdXa58uHkAZ0kXRqw
+      responses:
+        '200':
+          description: Successful sign out
+        '401':
+          description: Unauthorized

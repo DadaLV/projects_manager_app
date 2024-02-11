@@ -17,4 +17,31 @@ RSpec.describe 'SessionsController', type: :request do
       expect(response).to have_http_status(401)
     end
   end
+
+  describe 'DELETE api/v1/auth/sign_out' do
+    let(:user) { create :user }
+    it 'signs out a user successfully' do
+      post '/api/v1/auth/sign_in', params: user.slice(:email, :password)
+      expect(response).to have_http_status(200)
+
+      access_token = response.headers['access-token']
+      client = response.headers['client']
+      uid = response.headers['uid']
+
+      delete '/api/v1/auth/sign_out', headers: {
+        'access-token': access_token,
+        'client': client,
+        'uid': uid
+      }
+      expect(response).to have_http_status(200)
+
+      get '/api/v1/auth/validate_token', headers: {
+        'access-token': access_token,
+        'client': client,
+        'uid': uid
+      }
+
+      expect(response).to have_http_status(401)
+    end
+  end
 end
