@@ -3,3 +3,29 @@ openapi: 3.0.1
 info:
   title: API V1
   version: v1
+paths:
+  /api/v1/auth/sign_in:
+    post:
+      tags:
+        - Authentication
+      summary: Signs in a user
+      description: Use this endpoint to authenticate a user.
+      operationId: signInUser
+      parameters:
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
+            example: test@test.com
+        - name: password
+          in: query
+          required: true
+          schema:
+            type: string
+            example: password
+      responses:
+        "200":
+          description: successful
+        "401":
+          description: unauthorized
