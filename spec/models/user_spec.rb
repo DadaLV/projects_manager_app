@@ -22,4 +22,11 @@ RSpec.describe User, type: :model do
       expect(user.errors[:email]).to include("has already been taken")
     end
   end
+
+  describe 'associations' do
+    it 'has many projects' do
+      association = described_class.reflect_on_association(:projects)
+      expect(association.macro).to eq :has_many
+    end
+  end
 end

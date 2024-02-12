@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       mount_devise_token_auth_for 'User', at: 'auth'
+      resources :projects, only: [:index, :show, :create, :update, :destroy] do
+        resources :tasks, only: [:index, :show, :create, :update, :destroy]
+      end
     end 
   end
   mount Rswag::Ui::Engine => '/api-docs'
