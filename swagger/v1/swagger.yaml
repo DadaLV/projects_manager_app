@@ -91,3 +91,405 @@ paths:
           description: successful
         "422":
           description: unprocessable content
+  /api/v1/projects:
+    get:
+      summary: Retrieves all projects associated with the authenticated user
+      tags:
+        - Projects
+      description: Use this endpoint to retrieve a list of all Home Owner Associations associated with the authenticated user or to search for hoa by a specific term
+      operationId: getHomeOwnerAssociations
+      parameters:
+        - name: uid
+          in: header
+          required: true
+          schema:
+            type: string
+            example: test@test.com
+        - name: client
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 6xXSSR5Rh1inF305K-V_kg
+        - name: access-token
+          in: header
+          required: true
+          schema:
+            type: string
+            example: pFppqIdXa58uHkAZ0kXRqw
+      responses:
+        "200":
+          description: A successful response which can either be a list of Projects or a message indicating the search results.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Project"
+    post:
+      summary: Creates a new project
+      tags:
+        - Projects
+      description: Use this endpoint to create a new project for the authenticated user.
+      operationId: createProject
+      parameters:
+        - name: uid
+          in: header
+          required: true
+          schema:
+            type: string
+            example: test@test.com
+        - name: client
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 6xXSSR5Rh1inF305K-V_kg
+        - name: access-token
+          in: header
+          required: true
+          schema:
+            type: string
+            example: pFppqIdXa58uHkAZ0kXRqw
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        "201":
+          description: The project was successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        "422":
+          description: Unprocessable Entity - Invalid parameters were supplied.
+  /api/v1/projects/{id}:
+    put:
+      summary: Updates an existing project
+      tags:
+        - Projects
+      description: Use this endpoint to update an existing project by its ID.
+      operationId: updateProject
+      parameters:
+        - name: uid
+          in: header
+          required: true
+          schema:
+            type: string
+            example: test@test.com
+        - name: client
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 6xXSSR5Rh1inF305K-V_kg
+        - name: access-token
+          in: header
+          required: true
+          schema:
+            type: string
+            example: pFppqIdXa58uHkAZ0kXRqw
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        "200":
+          description: The project was successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        "404":
+          description: Not Found - The project with the specified ID was not found.
+        "422":
+          description: Unprocessable Entity - Invalid parameters were supplied.
+    delete:
+      summary: Deletes an existing project
+      tags:
+        - Projects
+      description: Use this endpoint to delete an existing project by its ID.
+      operationId: deleteProject
+      parameters:
+        - name: uid
+          in: header
+          required: true
+          schema:
+            type: string
+            example: test@test.com
+        - name: client
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 6xXSSR5Rh1inF305K-V_kg
+        - name: access-token
+          in: header
+          required: true
+          schema:
+            type: string
+            example: pFppqIdXa58uHkAZ0kXRqw
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "204":
+          description: The project was successfully deleted with no content returned.
+        "404":
+          description: Not Found - The project with the specified ID was not found.
+  /api/v1/projects/{project_id}/tasks:
+    get:
+      summary: Retrieves all tasks associated with a specific project
+      tags:
+        - Tasks
+      description: Use this endpoint to retrieve a list of all tasks associated with a specific project for the authenticated user.
+      operationId: getProjectTasks
+      parameters:
+        - name: uid
+          in: header
+          required: true
+          schema:
+            type: string
+            example: test@test.com
+        - name: client
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 6xXSSR5Rh1inF305K-V_kg
+        - name: access-token
+          in: header
+          required: true
+          schema:
+            type: string
+            example: pFppqIdXa58uHkAZ0kXRqw
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: A successful response which is a list of tasks associated with the specified project.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Task"
+
+    post:
+      summary: Creates a new task within a specific project
+      tags:
+        - Tasks
+      description: Use this endpoint to create a new task within a specific project for the authenticated user.
+      operationId: createProjectTask
+      parameters:
+        - name: uid
+          in: header
+          required: true
+          schema:
+            type: string
+            example: test@test.com
+        - name: client
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 6xXSSR5Rh1inF305K-V_kg
+        - name: access-token
+          in: header
+          required: true
+          schema:
+            type: string
+            example: pFppqIdXa58uHkAZ0kXRqw
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        "201":
+          description: The task was successfully created within the project.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        "422":
+          description: Unprocessable Entity - Invalid parameters were supplied.
+
+  /api/v1/projects/{project_id}/tasks/{id}:
+    put:
+      summary: Updates an existing task within a specific project
+      tags:
+        - Tasks
+      description: Use this endpoint to update an existing task by its ID within a specific project for the authenticated user.
+      operationId: updateProjectTask
+      parameters:
+        - name: uid
+          in: header
+          required: true
+          schema:
+            type: string
+            example: test@test.com
+        - name: client
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 6xXSSR5Rh1inF305K-V_kg
+        - name: access-token
+          in: header
+          required: true
+          schema:
+            type: string
+            example: pFppqIdXa58uHkAZ0kXRqw
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        "200":
+          description: The task within the project was successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        "404":
+          description: Not Found - The task with the specified ID was not found within the project.
+        "422":
+          description: Unprocessable Entity - Invalid parameters were supplied.
+
+    delete:
+      summary: Deletes an existing task within a specific project
+      tags:
+        - Tasks
+      description: Use this endpoint to delete an existing task by its ID within a specific project.
+      operationId: deleteProjectTask
+      parameters:
+        - name: uid
+          in: header
+          required: true
+          schema:
+            type: string
+            example: test@test.com
+        - name: client
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 6xXSSR5Rh1inF305K-V_kg
+        - name: access-token
+          in: header
+          required: true
+          schema:
+            type: string
+            example: pFppqIdXa58uHkAZ0kXRqw
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 2
+      responses:
+        "204":
+          description: The task was successfully deleted from the project with no content returned.
+        "404":
+          description: Not Found - The task with the specified ID was not found within the project.
+
+components:
+  schemas:
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 3
+        name:
+          type: string
+          example: Name of the Project
+        description:
+          type: string
+          example: Project description
+        user_id:
+          type: integer
+          example: 1
+
+    Task:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: Name of the task
+        description:
+          type: string
+          example: some description
+        status:
+          type: string
+          example: new
+        project_id:
+          type: integer
+          example: 2
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        provider:
+          type: string
+        uid:
+          type: string
+        email:
+          type: string
+        password:
+            type: string
+      required:
+        - email
+        - password
+        
