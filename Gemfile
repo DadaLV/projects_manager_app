@@ -49,4 +49,5 @@ group :development do
 end
 
 gem 'rswag'
-
+gem 'devise'
+gem 'devise_token_auth'
