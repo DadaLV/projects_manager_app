@@ -215,6 +215,47 @@ paths:
           description: Not Found - The project with the specified ID was not found.
         "422":
           description: Unprocessable Entity - Invalid parameters were supplied.
+    /api/v1/projects/{id}:
+    get:
+      summary: Retrieve a project by ID
+      tags:
+        - Projects
+      description: Use this endpoint to retrieve details of a specific project by its ID.
+      operationId: getProjectById
+      parameters:
+        - name: uid
+          in: header
+          required: true
+          schema:
+            type: string
+            example: test@test.com
+        - name: client
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 6xXSSR5Rh1inF305K-V_kg
+        - name: access-token
+          in: header
+          required: true
+          schema:
+            type: string
+            example: pFppqIdXa58uHkAZ0kXRqw
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: Successfully retrieved the project details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        "404":
+          description: Not Found - The project with the specified ID was not found.
     delete:
       summary: Deletes an existing project
       tags:
@@ -394,8 +435,53 @@ paths:
         "404":
           description: Not Found - The task with the specified ID was not found within the project.
         "422":
-          description: Unprocessable Entity - Invalid parameters were supplied.
-
+          description: Unprocessable Entity - Invalid parameters were supplied.            
+    get:
+      summary: Retrieve a task by ID associated with a project
+      tags:
+        - Tasks
+      description: Use this endpoint to retrieve details of a specific task by its ID within a project.
+      operationId: getTaskById
+      parameters:
+        - name: uid
+          in: header
+          required: true
+          schema:
+            type: string
+            example: test@test.com
+        - name: client
+          in: header
+          required: true
+          schema:
+            type: string
+            example: 6xXSSR5Rh1inF305K-V_kg
+        - name: access-token
+          in: header
+          required: true
+          schema:
+            type: string
+            example: pFppqIdXa58uHkAZ0kXRqw
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 2
+      responses:
+        "200":
+          description: Successfully retrieved the task details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        "404":
+          description: Not Found - The task with the specified ID was not found within the project.
     delete:
       summary: Deletes an existing task within a specific project
       tags:
