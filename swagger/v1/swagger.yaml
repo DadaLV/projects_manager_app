@@ -60,3 +60,34 @@ paths:
           description: Successful sign out
         '401':
           description: Unauthorized
+  /api/v1/auth:
+    post:
+      tags:
+        - Authentication
+      summary: Signs up a user
+      description: Use this endpoint to create a new user.
+      operationId: signUpUser
+      parameters:
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
+            example: test2@test.com
+        - name: password
+          in: query
+          required: true
+          schema:
+            type: string
+            example: password
+        - name: password_confirmation
+          in: query
+          required: true
+          schema:
+            type: string
+            example: password
+      responses:
+        "200":
+          description: successful
+        "422":
+          description: unprocessable content
